@@ -1,0 +1,9 @@
+alias mdupdate='sh /home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
+alias update='sudo apt update && sudo apt upgrade && flatpak update'
+alias c='clear'
+alias now='date +%T'
+alias ports='ss -tulpn'
+alias gh='history|grep'
+alias lt='ls --human-readable --size -1 -S -F'
+alias count='find . -type f | wc -l'
+

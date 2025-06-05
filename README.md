@@ -6,4 +6,4 @@
     - private_dot_ssh/private_config.tmpl
     - .chezmoi.toml.tmpl
 3. Run single line install and application of chezmoi
-    - sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com-$HOSTNAME:volk12/dotfiles.git
+    - ```sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com-$HOSTNAME:volk12/dotfiles.git```

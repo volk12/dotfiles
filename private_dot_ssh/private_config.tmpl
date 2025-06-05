@@ -1,0 +1,18 @@
+Host *
+	IdentityAgent ~/.1password/agent.sock
+
+{{ if eq .machine_id "starbug" -}}
+# Volk12 github account from starbug
+Host github.com-starbug
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_volk12_starbug
+    IdentitiesOnly yes
+{{ else if eq .machine_id "other-machine-id" -}}
+# Volk12 github account from red-dwarf
+Host github.com-volk12
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_volk12
+    IdentitiesOnly yes
+{{- end }}

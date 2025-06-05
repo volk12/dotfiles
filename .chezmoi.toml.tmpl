@@ -1,5 +1,13 @@
 # This is a template for your chezmoi.toml file
 # It will be generated in ~/.config/chezmoi/chezmoi.toml
 
+{{ if eq .chezmoi.hostname "starbug" -}}
+[data]
+machine_id = "starbug"
+{{ else if eq .chezmoi.hostname "red-dwarf" -}}
+[data]
+machine_id = "red-dwarf"
+{{- end }}
+
 [edit]
-	command = "nano"
+command = "nano"

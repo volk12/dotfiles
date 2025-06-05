@@ -1,8 +1,0 @@
-Host *
-	IdentityAgent ~/.1password/agent.sock
-
-# Volk12 Github account
-Host github.com-volk12
-	hostname github.com
-	IdentityFile ~/.ssh/id_ed25519_volk12
-	IdentitiesOnly yes # Prevents SSH from trying other keys

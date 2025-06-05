@@ -6,4 +6,4 @@ alias ports='ss -tulpn'
 alias gh='history|grep'
 alias lt='ls --human-readable --size -1 -S -F'
 alias count='find . -type f | wc -l'
-
+alias cm='chezmoi'

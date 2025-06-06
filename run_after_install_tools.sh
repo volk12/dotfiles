@@ -44,8 +44,10 @@ fi
 
 # --- FiraCode Nerd Font Installation ---
 echo "Installing FiraCode Nerd Font..."
-# Check if FiraCode Nerd Font is already installed
-if ! fc-list | grep -q "FiraCodeNerdFont"; then
+FONT_INSTALL_DIR="$HOME/.local/share/fonts/FiraCode"
+# Check if the font installation directory exists and contains font files
+# This is a more robust check than relying solely on fc-list's immediate cache state
+if [ ! -d "$FONT_INSTALL_DIR" ] || [ -z "$(find "$FONT_INSTALL_DIR" -maxdepth 1 -type f \( -name "*.ttf" -o -name "*.otf" \) -print -quit)" ]; then
     # Dynamically get the latest release version from GitHub API
     LATEST_RELEASE_TAG=$(curl -s "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
     

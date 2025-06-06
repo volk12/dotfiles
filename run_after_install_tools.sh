@@ -15,6 +15,24 @@ else
     echo "Oh My Zsh is already installed. Skipping."
 fi
 
+# --- Zsh Plugin Installation (Autosuggestions & Syntax Highlighting) ---
+# Ensure ZSH_CUSTOM is defined; OMZ usually sets it to $HOME/.oh-my-zsh/custom
+ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom} 
+
+echo "Installing zsh-autosuggestions plugin..."
+if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM}/plugins/zsh-autosuggestions"
+else
+    echo "zsh-autosuggestions already installed. Skipping."
+fi
+
+echo "Installing zsh-syntax-highlighting plugin..."
+if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting"
+else
+    echo "zsh-syntax-highlighting already installed. Skipping."
+fi
+
 # --- Starship Installation ---
 echo "Installing Starship..."
 # Check if starship is already in PATH

@@ -81,12 +81,12 @@ plugins=(
   # For syntax highlighting: zsh-syntax-highlighting
   # For autosuggestions: zsh-autosuggestions
   # Example:
-  # zsh-syntax-highlighting
-  # zsh-autosuggestions
-  # colored-man-pages
-  # z
-  # web-search
-  # history
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  colored-man-pages
+  z
+  #web-search
+  history
 )
 
 # Source Oh My Zsh. This must be at the end of the OMZ config block.

@@ -193,8 +193,7 @@ alias l='ls -CF'
 
 # My custom aliases
 alias mdupdate='sh /home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
-alias sysup='sudo apt update && sudo apt upgrade && flatpak update && chezmoi upgrade'
-#TODO - Future version - alias sysup='sudo apt update && sudo apt upgrade -y && flatpak update && omz update && curl -sS https://starship.rs/install.sh | sh -s -- -y && chezmoi upgrade'
+#alias sysup='sudo apt update && sudo apt upgrade && flatpak update && chezmoi upgrade' -NOTE- Replaced with sysup script
 alias c='clear'
 alias now='date +%T'
 alias ports='ss -tulpn'

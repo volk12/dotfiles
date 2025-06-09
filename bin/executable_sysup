@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+
+# Protect against running with shells other than zsh
+if [ -z "$ZSH_VERSION" ]; then
+  exec zsh "$0" "$@"
+fi
+
+# Update and upgrade apt packages
+echo "--- Updating apt packages ---"
+sudo apt update && sudo apt upgrade -y
+
+# Update Flatpak packages
+echo "--- Updating Flatpak packages ---"
+flatpak update
+
+# Upgrade Chezmoi
+echo "--- Upgrading Chezmoi ---"
+chezmoi upgrade
+
+# Update Oh My Zsh
+echo "--- Updating Oh My Zsh ---"
+# Directly call the Oh My Zsh update script
+if [ -f "$ZSH/tools/upgrade.sh" ]; then
+    "$ZSH/tools/upgrade.sh"
+elif [ -f "$HOME/.oh-my-zsh/tools/upgrade.sh" ]; then
+    "$HOME/.oh-my-zsh/tools/upgrade.sh"
+else
+    echo "Warning: Oh My Zsh upgrade script not found. Skipping Oh My Zsh update."
+fi
+
+# Check and install/update Starship
+echo "--- Checking Starship version ---"
+if command -v starship &> /dev/null; then
+    LATEST_STARSHIP_VERSION=$(curl -sS "https://api.github.com/repos/starship/starship/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+    # Strip leading 'v' from LATEST_STARSHIP_VERSION if it exists
+    LATEST_STARSHIP_VERSION="${LATEST_STARSHIP_VERSION#v}"
+    CURRENT_STARSHIP_VERSION=$(starship --version 2>&1 | head -n 1 | grep -Po 'starship \K[^ ]*')
+
+    if [ "$CURRENT_STARSHIP_VERSION" = "$LATEST_STARSHIP_VERSION" ]; then
+        echo "Starship is already at the latest version ($CURRENT_STARSHIP_VERSION). Skipping installation."
+    else
+        echo "Starship is not at the latest version. Updating from $CURRENT_STARSHIP_VERSION to $LATEST_STARSHIP_VERSION..."
+        curl -sS https://starship.rs/install.sh | sh -s -- -y
+    fi
+else
+    echo "Starship not found. Skipping update"
+    # echo "Starship not found. Installing Starship..."
+    # curl -sS https://starship.rs/install.sh | sh -s -- -y
+fi
+
+echo "--- All updates complete! ---"

@@ -25,7 +25,7 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
-printf "${BOLD}${CYAN}Ensuring zsh is installed...${RESET}\n\n"
+printf "${BOLD}${CYAN}--- Ensuring ZSH is Installed ---${RESET}\n\n"
 
 ZSH_PATH="/usr/bin/zsh" # Assume /bin is symlinked to /usr/bin
 
@@ -59,4 +59,4 @@ else
     printf "${BOLD}${GREEN}Current shell is already zsh.${RESET}\n\n"
 fi
 
-printf "${BOLD}${GREEN}zsh setup complete.${RESET}\n\n"
+printf "${BOLD}${GREEN}--- ZSH Setup Complete ---${RESET}\n\n"

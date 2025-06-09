@@ -30,7 +30,6 @@ format = '🕙[\[$time\]]($style) '
 use_12hr = true
 style = 'green'
 
- 
 [os]
 disabled = true
 style = "bold blue"

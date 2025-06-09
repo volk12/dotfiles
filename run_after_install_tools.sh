@@ -25,48 +25,48 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
-echo "--- Running post-chezmoi installation script ---"
+printf "${BOLD}${CYAN}--- Running post-chezmoi installation script ---${RESET}\n\n"
 
 # --- Oh My Zsh Installation ---
-echo "Installing Oh My Zsh..."
+printf "${BOLD}${CYAN}Installing Oh My Zsh...${RESET}\n\n"
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     # --keep-zshrc: Crucial flag to prevent installer from modifying existing .zshrc
     # --unattended: Runs without user interaction (e.g., prompts for .zshrc overwrite)
     # --skip-chsh: Prevents the installer from trying to change the default shell
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc --skip-chsh || true
 else
-    echo "Oh My Zsh is already installed. Skipping."
+    printf "${BOLD}${GREEN}Oh My Zsh is already installed. Skipping.${RESET}\n\n"
 fi
 
 # --- Zsh Plugin Installation (Autosuggestions & Syntax Highlighting) ---
 # Ensure ZSH_CUSTOM is defined; OMZ usually sets it to $HOME/.oh-my-zsh/custom
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom} 
 
-echo "Installing zsh-autosuggestions plugin..."
+printf "${BOLD}${CYAN}Installing zsh-autosuggestions plugin...${RESET}\n\n"
 if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-autosuggestions" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM}/plugins/zsh-autosuggestions"
 else
-    echo "zsh-autosuggestions already installed. Skipping."
+    printf "${BOLD}${GREEN}zsh-autosuggestions already installed. Skipping.${RESET}\n\n"
 fi
 
-echo "Installing zsh-syntax-highlighting plugin..."
+printf "${BOLD}${CYAN}Installing zsh-syntax-highlighting plugin...${RESET}\n\n"
 if [ ! -d "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting" ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting"
 else
-    echo "zsh-syntax-highlighting already installed. Skipping."
+    printf "${BOLD}${GREEN}zsh-syntax-highlighting already installed. Skipping.${RESET}\n\n"
 fi
 
 # --- Starship Installation ---
-echo "Installing Starship..."
+printf "${BOLD}${CYAN}Installing Starship...${RESET}\n\n"
 # Check if starship is already in PATH
 if ! command -v starship &> /dev/null; then
     curl -sS https://starship.rs/install.sh | sh -s -- -y # -y for non-interactive
 else
-    echo "Starship is already installed. Skipping."
+    printf "${BOLD}${GREEN}Starship is already installed. Skipping.${RESET}\n\n"
 fi
 
 # --- FiraCode Nerd Font Installation ---
-echo "Installing FiraCode Nerd Font..."
+printf "${BOLD}${CYAN}Installing FiraCode Nerd Font...${RESET}\n\n"
 FONT_INSTALL_DIR="$HOME/.local/share/fonts/FiraCode"
 # Check if the font installation directory exists and contains font files
 # This is a more robust check than relying solely on fc-list's immediate cache state
@@ -75,31 +75,31 @@ if [ ! -d "$FONT_INSTALL_DIR" ] || [ -z "$(find "$FONT_INSTALL_DIR" -maxdepth 1 
     LATEST_RELEASE_TAG=$(curl -s "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
     
     if [ -z "$LATEST_RELEASE_TAG" ]; then
-        echo "Error: Could not determine the latest Nerd Fonts release tag. Skipping font installation."
+        printf "${BOLD}${RED}Error: Could not determine the latest Nerd Fonts release tag. Skipping font installation.${RESET}\n\n"
     else
-        echo "Latest Nerd Fonts release detected: $LATEST_RELEASE_TAG"
+        printf "${BOLD}${CYAN}Latest Nerd Fonts release detected:${RESET} $LATEST_RELEASE_TAG\n\n"
         FONT_DIR="$HOME/.local/share/fonts/FiraCode" # User-specific font directory
         mkdir -p "$FONT_DIR"
 
         FONT_ZIP_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${LATEST_RELEASE_TAG}/FiraCode.zip"
         TEMP_ZIP_PATH="/tmp/FiraCodeNerdFont_${LATEST_RELEASE_TAG}.zip"
 
-        echo "Downloading FiraCode Nerd Font from: $FONT_ZIP_URL"
+        printf "${BOLD}${CYAN}Downloading FiraCode Nerd Font from:${RESET} $FONT_ZIP_URL\n\n"
         curl -fsSL "$FONT_ZIP_URL" -o "$TEMP_ZIP_PATH"
 
-        echo "Unzipping FiraCode Nerd Font to $FONT_DIR..."
+        printf "${BOLD}${CYAN}Unzipping FiraCode Nerd Font to${RESET} $FONT_DIR\n\n"
         unzip -o "$TEMP_ZIP_PATH" -d "$FONT_DIR"
 
-        echo "Cleaning up temporary files..."
+        printf "${BOLD}${CYAN}Cleaning up temporary files...${RESET}\n\n"
         rm "$TEMP_ZIP_PATH"
 
-        echo "Refreshing font cache..."
+        printf "${BOLD}${CYAN}Refreshing font cache...${RESET}\n\n"
         fc-cache -fv
 
-        echo "FiraCode Nerd Font installed."
+        printf "${BOLD}${GREEN}FiraCode Nerd Font installed.${RESET}\n\n"
     fi
 else
-    echo "FiraCode Nerd Font already detected. Skipping."
+    printf "${BOLD}${GREEN}FiraCode Nerd Font already detected. Skipping.${RESET}\n\n"
 fi
 
-echo "--- Post-chezmoi installation script finished ---"
+printf "${BOLD}${GREEN}--- Post-chezmoi installation script finished ---${RESET}\n\n"

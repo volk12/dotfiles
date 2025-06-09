@@ -1,5 +1,4 @@
 #!/bin/bash
-# ~/.chezmoi.d/run_before_install_zsh.sh
 
 # Exit immediately if a command exits with a non-zero status.
 set -e

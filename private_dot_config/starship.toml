@@ -2,8 +2,7 @@
 add_newline = true
 
 format = """
-[┌──\\(](green)$username👾$hostname[\\)](green)$os $time| [$directory](bold blue)$all$line_break[└─](green)$character\
-"""
+[┌──\\(](green)$username👾$hostname[\\)](green)$os $time| [$directory](bold blue)$all$line_break[└─](green)$character"""
 
 [character]
 #success_symbol = "💲"

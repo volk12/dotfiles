@@ -4,7 +4,7 @@
 1. Generate and configure SSH key for Github
     - Create key
     - Copy public key into Github
-    - create .ssh/config file for first run
+    - Create .ssh/config file for first run
         - This file will be overwritten so updating the template in the next step is crucial
 2. Modify repo for new machine hostname:
     - private_dot_ssh/private_config.tmpl

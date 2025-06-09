@@ -5,31 +5,53 @@ if [ -z "$ZSH_VERSION" ]; then
   exec zsh "$0" "$@"
 fi
 
+# Define ANSI color/style codes as variables for readability
+# Escape sequence for color/style
+ESC="\e["
+RESET="${ESC}0m" # Reset all attributes
+BOLD="${ESC}1m"  # Bold text
+
+# Standard 8 colors (foreground)
+RED="${ESC}31m"
+GREEN="${ESC}32m"
+YELLOW="${ESC}33m"
+BLUE="${ESC}34m"
+MAGENTA="${ESC}35m"
+CYAN="${ESC}36m"
+
+# Bright colors (often equivalent to bold versions of standard colors)
+BRIGHT_RED="${ESC}91m"
+BRIGHT_GREEN="${ESC}92m"
+BRIGHT_YELLOW="${ESC}93m"
+BRIGHT_BLUE="${ESC}94m"
+BRIGHT_MAGENTA="${ESC}95m"
+BRIGHT_CYAN="${ESC}96m"
+
 # Update and upgrade apt packages
-echo "--- Updating apt packages ---"
-sudo apt update && sudo apt upgrade -y
+printf "${BOLD}${CYAN}--- Updating apt packages ---${RESET}\n"
+sudo apt update && sudo apt upgrade
 
 # Update Flatpak packages
-echo "--- Updating Flatpak packages ---"
+printf "\n${BOLD}${CYAN}--- Updating Flatpak packages ---${RESET}\n"
 flatpak update
 
 # Upgrade Chezmoi
-echo "--- Upgrading Chezmoi ---"
+printf "\n${BOLD}${CYAN}--- Upgrading Chezmoi ---${RESET}\n"
 chezmoi upgrade
 
 # Update Oh My Zsh
-echo "--- Updating Oh My Zsh ---"
+printf "\n${BOLD}${CYAN}--- Updating Oh My Zsh ---${RESET}\n"
 # Directly call the Oh My Zsh update script
 if [ -f "$ZSH/tools/upgrade.sh" ]; then
     "$ZSH/tools/upgrade.sh"
 elif [ -f "$HOME/.oh-my-zsh/tools/upgrade.sh" ]; then
     "$HOME/.oh-my-zsh/tools/upgrade.sh"
 else
-    echo "Warning: Oh My Zsh upgrade script not found. Skipping Oh My Zsh update."
+    echo "${RED}Warning: Oh My Zsh upgrade script not found. Skipping Oh My Zsh update.${RESET}"
 fi
 
 # Check and install/update Starship
-echo "--- Checking Starship version ---"
+printf "\n${BOLD}${CYAN}--- Checking Starship version ---${RESET}\n"
 if command -v starship &> /dev/null; then
     LATEST_STARSHIP_VERSION=$(curl -sS "https://api.github.com/repos/starship/starship/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
     # Strip leading 'v' from LATEST_STARSHIP_VERSION if it exists
@@ -37,15 +59,15 @@ if command -v starship &> /dev/null; then
     CURRENT_STARSHIP_VERSION=$(starship --version 2>&1 | head -n 1 | grep -Po 'starship \K[^ ]*')
 
     if [ "$CURRENT_STARSHIP_VERSION" = "$LATEST_STARSHIP_VERSION" ]; then
-        echo "Starship is already at the latest version ($CURRENT_STARSHIP_VERSION). Skipping installation."
+        echo "${GREEN}Starship is already at the latest version ($CURRENT_STARSHIP_VERSION). Skipping installation.${RESET}"
     else
-        echo "Starship is not at the latest version. Updating from $CURRENT_STARSHIP_VERSION to $LATEST_STARSHIP_VERSION..."
+        echo "${YELLOW}Starship is not at the latest version. Updating from $CURRENT_STARSHIP_VERSION to $LATEST_STARSHIP_VERSION...${RESET}"
         curl -sS https://starship.rs/install.sh | sh -s -- -y
     fi
 else
-    echo "Starship not found. Skipping update"
+    echo "${RED}Starship not found. Skipping update${RESET}"
     # echo "Starship not found. Installing Starship..."
     # curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
-echo "--- All updates complete! ---"
+printf "\n${BOLD}${BRIGHT_GREEN}--- All updates complete! ---${RESET}\n"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit immediately if a command exits with a non-zero status.
-set -e
+set -euo pipefail # Exit on error, prevent unset variables, pipe errors
 
 # Define ANSI color/style codes as variables for readability
 # Escape sequence for color/style

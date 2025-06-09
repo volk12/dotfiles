@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Don't use 'set -e' to allow individual package installations to fail without stopping the whole script
+# Do NOT use 'set -e' or 'set -o pipefail' to allow individual package
+# installations (especially in loops) to fail without stopping the entire script.
+# We will rely on explicit '||' error handling for specific commands.
 # Only critical initial setup commands will use '|| exit 1'
+set -u # Ensure all variables are set
 
 # Define ANSI color/style codes as variables for readability
 # Escape sequence for color/style

@@ -1,6 +1,29 @@
 #!/bin/bash
+
 # run_after_install-tools.sh - Post-chezmoi installation script for new machines
-set -euo pipefail # Exit on error, unset variables, pipe errors
+set -euo pipefail # Exit on error, prevent unset variables, pipe errors
+
+# Define ANSI color/style codes as variables for readability
+# Escape sequence for color/style
+ESC="\e["
+RESET="${ESC}0m" # Reset all attributes
+BOLD="${ESC}1m"  # Bold text
+
+# Standard 8 colors (foreground)
+RED="${ESC}31m"
+GREEN="${ESC}32m"
+YELLOW="${ESC}33m"
+BLUE="${ESC}34m"
+MAGENTA="${ESC}35m"
+CYAN="${ESC}36m"
+
+# Bright colors (often equivalent to bold versions of standard colors)
+BRIGHT_RED="${ESC}91m"
+BRIGHT_GREEN="${ESC}92m"
+BRIGHT_YELLOW="${ESC}93m"
+BRIGHT_BLUE="${ESC}94m"
+BRIGHT_MAGENTA="${ESC}95m"
+BRIGHT_CYAN="${ESC}96m"
 
 echo "--- Running post-chezmoi installation script ---"
 

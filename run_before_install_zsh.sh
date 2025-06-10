@@ -32,9 +32,9 @@ ZSH_PATH="/usr/bin/zsh" # Assume /bin is symlinked to /usr/bin
 # Check if zsh is already installed
 if ! command -v zsh &> /dev/null; then
     printf "${BOLD}${YELLOW}zsh is not installed. Installing...${RESET}\n\n"
-    if command -v apt &> /dev/null; then # Support Debian / Ubuntu
-        sudo apt update || { printf "${BOLD}${RED}Error: apt update failed. Cannot install zsh.${RESET}\n\n"; exit 1; }
-        sudo apt install -y zsh || { printf "${BOLD}${RED}Error: Failed to install zsh via apt. Aborting setup.${RESET}\n\n"; exit 1; }
+    if command -v apt-get &> /dev/null; then # Support Debian / Ubuntu
+        sudo apt-get update || { printf "${BOLD}${RED}Error: apt-get update failed. Cannot install zsh.${RESET}\n\n"; exit 1; }
+        sudo apt-get install -y zsh || { printf "${BOLD}${RED}Error: Failed to install zsh via apt-get. Aborting setup.${RESET}\n\n"; exit 1; }
     elif command -v dnf &> /dev/null; then # Support Fedora / Red Hat
         sudo dnf install -y zsh || { printf "${BOLD}${RED}Error: Failed to install zsh via dnf. Aborting setup.${RESET}\n\n"; exit 1; }
     elif command -v pacman &> /dev/null; then # Support Arch

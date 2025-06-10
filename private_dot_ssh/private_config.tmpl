@@ -15,4 +15,11 @@ Host github.com-volk12
     User git
     IdentityFile ~/.ssh/id_ed25519_volk12
     IdentitiesOnly yes
+{{ else if eq .machine_id "pop-config-testing" -}}
+# Volk12 github account from pop-config-testing
+Host github.com
+    Hostname github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
 {{- end }}

@@ -102,4 +102,24 @@ else
     printf "${BOLD}${GREEN}FiraCode Nerd Font already detected. Skipping.${RESET}\n\n"
 fi
 
+# --- Add vte.sh symlink ---
+printf "${BOLD}${CYAN}Creating /etc/profile.d/vte.sh symlink...${RESET}\n\n"
+
+TARGET_FILE="/etc/profile.d/vte-2.91.sh"
+SYMLINK_PATH="/etc/profile.d/vte.sh"
+
+if [ -L "$SYMLINK_PATH" ]; then
+    printf "${BOLD}${GREEN}Symlink '$SYMLINK_PATH' already exists and points to a file/directory. Skipping.${RESET}\n\n"
+elif [ -e "$SYMLINK_PATH" ]; then
+    printf "${BOLD}${RED}Error: '$SYMLINK_PATH' exists but is not a symlink. Skipping to prevent overwrite.${RESET}\n\n"
+else
+    # Check if the target file exists before creating the symlink
+    if [ -e "$TARGET_FILE" ]; then
+        sudo ln -s "$TARGET_FILE" "$SYMLINK_PATH" || printf "${BOLD}${RED}ERROR: Failed to create symlink $SYMLINK_PATH${RESET}\n\n"
+        printf "${BOLD}${GREEN}Symlink '$SYMLINK_PATH' created.${RESET}\n\n"
+    else
+        printf "${BOLD}${RED}ERROR: Target file '$TARGET_FILE' does not exist. Cannot create symlink '$SYMLINK_PATH'.${RESET}\n\n"
+    fi
+fi
+
 printf "${BOLD}${GREEN}--- Post-chezmoi installation script finished ---${RESET}\n\n"

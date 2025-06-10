@@ -7,6 +7,9 @@ machine_id = "starbug"
 {{ else if eq .chezmoi.hostname "red-dwarf" -}}
 [data]
 machine_id = "red-dwarf"
+{{ else if eq .chezmoi.hostname "pop-config-testing" -}}
+[data]
+machine_id = "pop-config-testing"
 {{- end }}
 
 [edit]

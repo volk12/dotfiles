@@ -34,3 +34,8 @@ style = 'green'
 disabled = true
 style = "bold blue"
 format = " on [$symbol$name]($style)"
+
+[sudo]
+disabled = false
+style = "bold green"
+symbol = "🫚"  # other emoji options: 🚀 🛸 🚨

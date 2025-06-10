@@ -28,10 +28,10 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
-echo "Installing desired APT packages..."
+printf "${BOLD}${CYAN}--- Installing Desired APT Packages ---${RESET}\n\n"
 
 if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
-    sudo apt update || echo "Warning: apt update failed. Subsequent package installations may be out of date or fail."
+    sudo apt update || printf "${BOLD}${RED}ERROR: apt update failed. Subsequent package installations may be out of date or fail.${RESET}\n\n"
 
     # List of APT packages
     APT_PACKAGES=(
@@ -39,39 +39,57 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
         # "vim"
         # "tmux"
         # "htop"
-        # "build-essential"
-        # Add all your desired APT packages here
     )
 
     for pkg in "${APT_PACKAGES[@]}"; do
-        echo "Installing APT package: $pkg"
-        sudo apt install -y "$pkg" || echo "Warning: Failed to install APT package: $pkg. Continuing..."
+        printf "${BOLD}${CYAN}Installing APT package:${RESET} $pkg\n\n"
+        sudo apt install -y "$pkg" || printf "${BOLD}${YELLOW}Warning: Failed to install APT package:${RESET} $pkg${BOLD}${CYAN}. Continuing...${RESET}\n\n"
     done
 else
-    echo "Warning: APT package manager not found. Please install APT packages manually."
+    printf "${BOLD}${RED}ERROR: APT package manager not found. Please install APT packages manually.${RESET}\n\n"
 fi
 
-echo "Installing desired Flatpak packages..."
+printf "${BOLD}${CYAN}--- Installing Desired Flatpak Packages ---${RESET}\n\n"
 
 # Ensure Flatpak is installed before trying to use it.
 if ! command -v flatpak &> /dev/null; then
-    echo "Flatpak is not installed. Installing Flatpak..."
-    sudo apt install -y flatpak || { echo "Error: Failed to install Flatpak via APT. Cannot install Flatpak apps."; exit 1; }
-    # Add Flathub remote here if you haven't already:
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || { echo "Error: Failed to add Flathub remote."; exit 1; }
+    printf "${BOLD}${YELLOW}Flatpak is not installed. Installing Flatpak...${RESET}\n\n"
+    sudo apt install -y flatpak || { printf "${BOLD}${RED}Error: Failed to install Flatpak via APT. Cannot install Flatpak apps.${RESET}\n\n"; exit 1; }
+    # Add Flathub remote:
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || { printf "${BOLD}${RED}Error: Failed to add Flathub remote.${RESET}\n\n"; exit 1; }
 fi
 
-# List of your desired Flatpak application IDs
+# List of desired Flatpak application IDs
 FLATPAK_APPS=(
-    # "org.gnome.Boxes"
-    # "com.spotify.Client"
-    # "org.gimp.GIMP"
-    # Add all your desired Flatpak application IDs here
+    "com.calibre_ebook.calibre"
+    "com.discordapp.Discord"
+    "com.github.tchx84.Flatseal"
+    "com.jetbrains.IntelliJ-IDEA-Ultimate"
+    "com.mattjakeman.ExtensionManager"
+    "com.obsproject.Studio"
+    "com.slack.Slack"
+    "com.valvesoftware.Steam"
+    "io.github.pwr_solaar.solaar"
+    "md.obsidian.Obsidian"
+    "org.audacityteam.Audacity"
+    "org.freedesktop.Piper"
+    "org.gimp.GIMP"
+    "org.gnome.Aisleriot"
+    "org.gnome.DejaDup"
+    "org.gnome.Mines"
+    "org.gnome.Rhythmbox3"
+    "org.gnome.Sudoku"
+    "org.gnome.meld"
+    "org.inkscape.Inkscape"
+    "org.openshot.OpenShot"
+    "org.signal.Signal"
+    "org.stellarium.Stellarium"
+    "org.zotero.Zotero"
 )
 
 for app_id in "${FLATPAK_APPS[@]}"; do
-    echo "Installing Flatpak: $app_id"
-    flatpak install flathub "$app_id" -y || echo "Warning: Failed to install Flatpak: $app_id. Continuing..."
+    printf "${BOLD}${CYAN}Installing Flatpak:${RESET} $app_id\n\n"
+    flatpak install flathub "$app_id" -y || printf "${BOLD}${YELLOW}Warning: Failed to install Flatpak:${RESET} $app_id${BOLD}${CYAN}. Continuing...${RESET}/n/n"
 done
 
-echo "Package installation complete."
+printf "${BOLD}${GREEN}--- Package Installation Complete ---${RESET}\n\n"

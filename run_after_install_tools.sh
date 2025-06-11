@@ -5,7 +5,7 @@ set -euo pipefail # Exit on error, prevent unset variables, pipe errors
 
 # Define ANSI color/style codes as variables for readability
 # Escape sequence for color/style
-ESC="\e["
+ESC="\033["
 RESET="${ESC}0m" # Reset all attributes
 BOLD="${ESC}1m"  # Bold text
 
@@ -25,7 +25,7 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
-printf "${BOLD}${CYAN}--- Running post-chezmoi installation script ---${RESET}\n\n"
+printf "${BOLD}${CYAN}--- Starting Terminal Config Setup (OMZ / Plugins / Starship / Fonts / Symlinks) ---${RESET}\n\n"
 
 # --- Oh My Zsh Installation ---
 printf "${BOLD}${CYAN}Installing Oh My Zsh...${RESET}\n\n"

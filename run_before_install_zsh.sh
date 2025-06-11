@@ -5,7 +5,7 @@ set -euo pipefail # Exit on error, prevent unset variables, pipe errors
 
 # Define ANSI color/style codes as variables for readability
 # Escape sequence for color/style
-ESC="\e["
+ESC="\033["
 RESET="${ESC}0m" # Reset all attributes
 BOLD="${ESC}1m"  # Bold text
 
@@ -25,7 +25,7 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
-printf "${BOLD}${CYAN}--- Ensuring ZSH is Installed ---${RESET}\n\n"
+printf "${BOLD}${CYAN}--- Ensuring ZSH is Installed and Enabled ---${RESET}\n\n"
 
 ZSH_PATH="/usr/bin/zsh" # Assume /bin is symlinked to /usr/bin
 

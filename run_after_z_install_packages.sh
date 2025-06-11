@@ -35,6 +35,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
 
     # List of APT packages
     APT_PACKAGES=(
+        tilix
         notvalid # test error case
         # "git"
         # "vim"

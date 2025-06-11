@@ -35,6 +35,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
 
     # List of APT packages
     APT_PACKAGES=(
+        notvalid # test error case
         # "git"
         # "vim"
         # "tmux"
@@ -89,7 +90,7 @@ FLATPAK_APPS=(
 
 for app_id in "${FLATPAK_APPS[@]}"; do
     printf "${BOLD}${CYAN}Installing Flatpak:${RESET} $app_id\n\n"
-    flatpak install flathub "$app_id" -y || printf "${BOLD}${YELLOW}Warning: Failed to install Flatpak:${RESET} $app_id${BOLD}${CYAN}. Continuing...${RESET}/n/n"
+    flatpak install flathub "$app_id" -y || printf "${BOLD}${YELLOW}Warning: Failed to install Flatpak:${RESET} $app_id${BOLD}${CYAN}. Continuing...${RESET}\n\n"
 done
 
 printf "${BOLD}${GREEN}--- Package Installation Complete ---${RESET}\n\n"

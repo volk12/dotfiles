@@ -45,7 +45,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
 
     for pkg in "${APT_PACKAGES[@]}"; do
         printf "${BOLD}${CYAN}Installing APT package:${RESET} $pkg\n\n"
-        sudo apt install -y "$pkg" || printf "${BOLD}${YELLOW}Warning: Failed to install APT package:${RESET} $pkg${BOLD}${CYAN}. Continuing...${RESET}\n\n"
+        sudo apt install -y "$pkg" || printf "${BOLD}${YELLOW}Warning: Failed to install APT package:${RESET} $pkg ${BOLD}${CYAN}Continuing...${RESET}\n\n"
     done
 else
     printf "${BOLD}${RED}ERROR: APT package manager not found. Please install APT packages manually.${RESET}\n\n"
@@ -91,7 +91,7 @@ FLATPAK_APPS=(
 
 for app_id in "${FLATPAK_APPS[@]}"; do
     printf "${BOLD}${CYAN}Installing Flatpak:${RESET} $app_id\n\n"
-    flatpak install flathub "$app_id" -y || printf "${BOLD}${YELLOW}Warning: Failed to install Flatpak:${RESET} $app_id${BOLD}${CYAN}. Continuing...${RESET}\n\n"
+    flatpak install flathub "$app_id" -y || printf "${BOLD}${YELLOW}Warning: Failed to install Flatpak:${RESET} $app_id ${BOLD}${CYAN}Continuing...${RESET}\n\n"
 done
 
 printf "${BOLD}${GREEN}--- Package Installation Complete ---${RESET}\n\n"

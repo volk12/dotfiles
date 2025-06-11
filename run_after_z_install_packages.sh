@@ -245,7 +245,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
         # Core tools
         "tilix"
         "btop"
-        "virtmanager"
+        "virt-manager"
         "code"
         "fastfetch"
         "speedtest"

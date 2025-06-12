@@ -109,6 +109,25 @@ else
     printf "${BOLD}${GREEN}    Syncthing APT repository already exists.${RESET}\n\n"
 fi
 
+# --- Syncthing APT Pinning Preference ---
+printf "${BOLD}${CYAN}  Setting up Syncthing APT pinning preference...${RESET}\n\n"
+
+SYNCTHING_PREF_FILE="/etc/apt/preferences.d/syncthing.pref"
+
+if [ ! -f "$SYNCTHING_PREF_FILE" ]; then
+    printf "${BOLD}${CYAN}    Adding Syncthing APT preference file...${RESET}\n\n"
+    # Ensure the /etc/apt/preferences.d/ directory exists
+    sudo mkdir -p /etc/apt/preferences.d/ || \
+        printf "${BOLD}${RED}    Warning: Failed to create /etc/apt/preferences.d/ directory.${RESET}\n\n"
+
+    # Add the preference content to the file
+    printf "Package: *\nPin: origin apt.syncthing.net\nPin-Priority: 990\n" | \
+        sudo tee "$SYNCTHING_PREF_FILE" > /dev/null || \
+        printf "${BOLD}${RED}    Warning: Failed to add Syncthing APT preference file.${RESET}\n\n"
+else
+    printf "${BOLD}${GREEN}    Syncthing APT preference file already exists.${RESET}\n\n"
+fi
+
 # +++++++++++++++++++++++++++++++++++++++++++++
 # START 1Password BLOCK
 # --- 1Password Repository ---
@@ -211,7 +230,13 @@ else
     printf "${BOLD}${GREEN}    Fastfetch APT repository already exists.${RESET}\n\n"
 fi
 
+# --- Add more repositories here ---
+# For example:
+# printf "${BOLD}${CYAN}  Setting up Another App repository...${RESET}\n\n"
+# ... (GPG key and sources.list.d entry for "Another App") ...
+
 # --- Speedtest CLI Repository ---
+# KEEP THIS BLOCK LAST -- the vendor script runs apt update.
 printf "${BOLD}${CYAN}  Setting up Speedtest CLI repository...${RESET}\n\n"
 
 # The official script from packagecloud.io should handle adding the GPG key
@@ -228,12 +253,7 @@ else
     printf "${BOLD}${GREEN}    Speedtest CLI APT repository already exists.${RESET}\n\n"
 fi
 
-# --- Add more repositories here ---
-# For example:
-# printf "${BOLD}${CYAN}  Setting up Another App repository...${RESET}\n\n"
-# ... (GPG key and sources.list.d entry for "Another App") ...
-
-
+# All done with repo setups
 printf "${BOLD}${CYAN}External APT repositories setup complete. Updating package lists...${RESET}\n\n"
 
 # ------------------------------------------------------------------------------

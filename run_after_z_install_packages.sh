@@ -191,7 +191,7 @@ if [ ! -f "$FASTFETCH_KEYRING_FILE" ]; then
     printf "${BOLD}${CYAN}    Downloading and adding Fastfetch GPG key...${RESET}\n\n"
     # Fetch the ASCII armored public key from the keyserver to stdout, then pipe to gpg --dearmor
     # We explicitly request ASCII armor output from gpg --export for piping.
-    sudo gpg --keyserver hkps://keyserver.ubuntu.com \
+    sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 \
              --recv-keys "$FASTFETCH_KEY_ID" && \
     sudo gpg --export --armor "$FASTFETCH_KEY_ID" | \
         sudo gpg --dearmor -o "$FASTFETCH_KEYRING_FILE" || \

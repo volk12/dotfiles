@@ -11,3 +11,4 @@
     - .chezmoi.toml.tmpl
 3. Run single line install and application of chezmoi
     - ```sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com-$HOSTNAME:volk12/dotfiles.git```
+    - To test run ```sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --branch testing git@github.com-$HOSTNAME:volk12/dotfiles.git```

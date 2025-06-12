@@ -262,6 +262,12 @@ printf "${BOLD}${CYAN}External APT repositories setup complete. Updating package
 
 printf "${BOLD}${CYAN}--- Installing Desired APT Packages ---${RESET}\n\n"
 
+# Function to check if package is installed
+is_package_installed() {
+    # Check if dpkg reports the package is 'install ok installed'
+    dpkg -s "$1" 2>/dev/null | grep -q "Status: install ok installed"
+}
+
 if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
     sudo apt-get update || printf "${BOLD}${RED}ERROR: apt update failed. Subsequent package installations may be out of date or fail.${RESET}\n\n"
 
@@ -285,7 +291,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
 
     for pkg in "${APT_PACKAGES[@]}"; do
         printf "${BOLD}${CYAN}Checking and installing APT package:${RESET} $pkg\n\n"
-        if ! dpkg -s "$pkg" &> /dev/null; then
+        if ! is_package_installed "$pkg" &> /dev/null; then
             # Package is NOT installed, proceed with installation
             sudo apt-get install -y "$pkg" || printf "${BOLD}${YELLOW}Warning: Failed to install APT package:${RESET} $pkg ${BOLD}${CYAN}Continuing...${RESET}\n\n"
         else

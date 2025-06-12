@@ -184,12 +184,17 @@ fi
 printf "${BOLD}${CYAN}  Setting up Fastfetch repository...${RESET}\n\n"
 
 # 1. Add Fastfetch GPG key
-if [ ! -f /usr/share/keyrings/fastfetch-archive-keyring.gpg ]; then
+FASTFETCH_KEY_ID="7E2E5CB4D4865F21" # Corrected Key ID from Launchpad PPA page
+FASTFETCH_KEYRING_FILE="/usr/share/keyrings/fastfetch-archive-keyring.gpg"
+
+if [ ! -f "$FASTFETCH_KEYRING_FILE" ]; then
     printf "${BOLD}${CYAN}    Downloading and adding Fastfetch GPG key...${RESET}\n\n"
-    # The key ID for this PPA is A0123048170C864B
-    sudo gpg --no-default-keyring --keyring /usr/share/keyrings/fastfetch-archive-keyring.gpg \
-        --keyserver hkps://keyserver.ubuntu.com \
-        --recv-keys A0123048170C864B || \
+    # Fetch the ASCII armored public key from the keyserver to stdout, then pipe to gpg --dearmor
+    # We explicitly request ASCII armor output from gpg --export for piping.
+    sudo gpg --keyserver hkps://keyserver.ubuntu.com \
+             --recv-keys "$FASTFETCH_KEY_ID" && \
+    sudo gpg --export --armor "$FASTFETCH_KEY_ID" | \
+        sudo gpg --dearmor -o "$FASTFETCH_KEYRING_FILE" || \
         printf "${BOLD}${RED}    Warning: Failed to add Fastfetch GPG key. Fastfetch installation may fail later.${RESET}\n\n"
 else
     printf "${BOLD}${GREEN}    Fastfetch GPG key already exists.${RESET}\n\n"
@@ -264,7 +269,7 @@ if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
             # Package is NOT installed, proceed with installation
             sudo apt-get install -y "$pkg" || printf "${BOLD}${YELLOW}Warning: Failed to install APT package:${RESET} $pkg ${BOLD}${CYAN}Continuing...${RESET}\n\n"
         else
-            printf "Package '$pkg' is already installed. Skipping."
+            printf "${BOLD}${GREEN}Package ${RESET}$pkg${BOLD}${GREEN} is already installed. Skipping.${RESET}\n\n"
         fi
     done
 else

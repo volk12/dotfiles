@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# dconf dump from /com/gexperts/Tilix/
+# tilix.dconf hash: {{ include "dot_config/tilix/tilix.dconf" | sha256sum }}
+
+set -euo pipefail # Exit on error, prevent unset variables, pipe errors
+
+# Define ANSI color/style codes as variables for readability
+# Escape sequence for color/style
+ESC="\033["
+RESET="${ESC}0m" # Reset all attributes
+BOLD="${ESC}1m"  # Bold text
+
+# Standard 8 colors (foreground)
+RED="${ESC}31m"
+GREEN="${ESC}32m"
+YELLOW="${ESC}33m"
+BLUE="${ESC}34m"
+MAGENTA="${ESC}35m"
+CYAN="${ESC}36m"
+
+# Bright colors (often equivalent to bold versions of standard colors)
+BRIGHT_RED="${ESC}91m"
+BRIGHT_GREEN="${ESC}92m"
+BRIGHT_YELLOW="${ESC}93m"
+BRIGHT_BLUE="${ESC}94m"
+BRIGHT_MAGENTA="${ESC}95m"
+BRIGHT_CYAN="${ESC}96m"
+
+# Check if dconf command is available.
+if ! command -v dconf &> /dev/null; then
+    printf "${BOLD}${RED}ERROR: dconf command not found. Cannot load Tilix settings.${RESET}\n\n"
+    exit 0
+fi
+
+# Define the path to the dconf dump file within chezmoi's source directory.
+# We use joinPath to construct the correct path to the source file.
+TILIX_DCONF_FILE="{{ joinPath .chezmoi.sourceDir "dot_config/tilix/tilix.dconf" }}"
+
+# Ensure the dconf dump file exists before attempting to load it.
+if [[ ! -f "$TILIX_DCONF_FILE" ]]; then
+    printf "${BOLD}${YELLOW}Warning: Tilix dconf dump file not found at${RESET} $TILIX_DCONF_FILE ${BOLD}${YELLOW}Skipping load.${RESET}\n\n"
+    exit 0
+fi
+
+printf "${BOLD}${CYAN}Loading Tilix dconf settings from${RESET} $TILIX_DCONF_FILE\n\n"
+dconf load /com/gexperts/Tilix/ < "$TILIX_DCONF_FILE"
+
+if [ $? -eq 0 ]; then
+    printf "${BOLD}${GREEN}Tilix dconf settings loaded successfully.${RESET}\n\n"
+else
+    printf "${BOLD}${RED}Error: Failed to load Tilix dconf settings.${RESET}\n\n"
+fi

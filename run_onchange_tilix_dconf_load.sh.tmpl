@@ -35,7 +35,7 @@ fi
 
 # Define the path to the dconf dump file within chezmoi's source directory.
 # We use joinPath to construct the correct path to the source file.
-TILIX_DCONF_FILE="{{ joinPath .chezmoi.sourceDir "dot_config/tilix/tilix.dconf" }}"
+TILIX_DCONF_FILE="{{ joinPath .chezmoi.sourceDir "private_dot_config/tilix/tilix.dconf" }}"
 
 # Ensure the dconf dump file exists before attempting to load it.
 if [[ ! -f "$TILIX_DCONF_FILE" ]]; then

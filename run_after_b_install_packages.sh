@@ -350,4 +350,3 @@ for app_id in "${FLATPAK_APPS[@]}"; do
 done
 
 printf "${BOLD}${GREEN}--- Package Installation Complete ---${RESET}\n\n"
-printf "${BOLD}${MAGENTA}---!!! LOG OUT AND BACK IN TO ENSURE ALL CHANGES TAKE EFFECT !!!---${RESET}\n\n"

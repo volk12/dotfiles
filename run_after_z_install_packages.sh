@@ -184,7 +184,12 @@ fi
 printf "${BOLD}${CYAN}  Setting up Fastfetch repository...${RESET}\n\n"
 
 # 1. Add Fastfetch GPG key
-
+if [ ! -f /usr/share/keyrings/fastfetch-archive-keyring.gpg ]; then
+    printf "${BOLD}${CYAN}    Downloading and adding Fastfetch GPG key...${RESET}\n\n"
+    # The key ID for this PPA is A0123048170C864B
+    sudo gpg --no-default-keyring --keyring /usr/share/keyrings/fastfetch-archive-keyring.gpg \
+        --keyserver hkps://keyserver.ubuntu.com \
+        --recv-keys A0123048170C864B || \
         printf "${BOLD}${RED}    Warning: Failed to add Fastfetch GPG key. Fastfetch installation may fail later.${RESET}\n\n"
 else
     printf "${BOLD}${GREEN}    Fastfetch GPG key already exists.${RESET}\n\n"

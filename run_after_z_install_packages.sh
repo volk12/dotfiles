@@ -124,7 +124,7 @@ fi
 
 if [ ! -f /etc/apt/sources.list.d/1password.list ]; then
     printf "${BOLD}${CYAN}    Adding 1Password APT repository...${RESET}\n\n"
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian stable main" | \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/$(dpkg --print-architecture) stable main" | \
         sudo tee /etc/apt/sources.list.d/1password.list > /dev/null || \
         printf "${BOLD}${RED}    Warning: Failed to add 1Password repository.${RESET}\n\n"
 else
@@ -184,12 +184,7 @@ fi
 printf "${BOLD}${CYAN}  Setting up Fastfetch repository...${RESET}\n\n"
 
 # 1. Add Fastfetch GPG key
-if [ ! -f /usr/share/keyrings/fastfetch-archive-keyring.gpg ]; then
-    printf "${BOLD}${CYAN}    Downloading and adding Fastfetch GPG key...${RESET}\n\n"
-    # The key ID for this PPA is A0123048170C864B
-    sudo gpg --no-default-keyring --keyring /usr/share/keyrings/fastfetch-archive-keyring.gpg \
-        --keyserver hkps://keyserver.ubuntu.com \
-        --recv-keys A0123048170C864B || \
+
         printf "${BOLD}${RED}    Warning: Failed to add Fastfetch GPG key. Fastfetch installation may fail later.${RESET}\n\n"
 else
     printf "${BOLD}${GREEN}    Fastfetch GPG key already exists.${RESET}\n\n"

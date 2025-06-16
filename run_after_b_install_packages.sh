@@ -28,6 +28,12 @@ BRIGHT_BLUE="${ESC}94m"
 BRIGHT_MAGENTA="${ESC}95m"
 BRIGHT_CYAN="${ESC}96m"
 
+# Function to check if package is installed
+is_package_installed() {
+    # Check if dpkg reports the package is 'install ok installed'
+    dpkg -s "$1" 2>/dev/null | grep -q "Status: install ok installed"
+}
+
 printf "${BOLD}${CYAN}--- Starting System Setup: Adding Repos, Installing Packages ---${RESET}\n\n"
 
 # ------------------------------------------------------------------------------
@@ -48,7 +54,7 @@ if command -v apt-get &> /dev/null; then
     )
     for dep_pkg in "${CORE_REPO_DEPS[@]}"; do
         printf "${BOLD}${CYAN}Checking and installing core repo dependency: $dep_pkg${RESET}\n\n"
-        if ! dpkg -s "$dep_pkg" &> /dev/null; then
+        if ! is_package_installed "$dep_pkg" &> /dev/null; then
             # Package is NOT installed, proceed with installation
             sudo apt-get install -y "$dep_pkg" || printf "${BOLD}${CYAN}Warning: Failed to install core repo dependency: $dep_pkg. Some repo setups may fail.${RESET}\n\n"
         else
@@ -261,12 +267,6 @@ printf "${BOLD}${CYAN}External APT repositories setup complete. Updating package
 # ------------------------------------------------------------------------------
 
 printf "${BOLD}${CYAN}--- Installing Desired APT Packages ---${RESET}\n\n"
-
-# Function to check if package is installed
-is_package_installed() {
-    # Check if dpkg reports the package is 'install ok installed'
-    dpkg -s "$1" 2>/dev/null | grep -q "Status: install ok installed"
-}
 
 if command -v apt &> /dev/null; then # Support Debian / Ubuntu only for now.
     sudo apt-get update || printf "${BOLD}${RED}ERROR: apt update failed. Subsequent package installations may be out of date or fail.${RESET}\n\n"

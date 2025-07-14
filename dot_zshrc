@@ -207,7 +207,7 @@ alias cm='chezmoi'
 # ------------------------------------------------------------------------------
 
 # Show fastfetch when terminal launched
-f [ -f /usr/bin/fastfetch ]; then
+if [ -f /usr/bin/fastfetch ]; then
         fastfetch
 fi
 

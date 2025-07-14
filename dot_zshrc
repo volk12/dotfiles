@@ -206,6 +206,11 @@ alias cm='chezmoi'
 # 9. Third-Party Tool Integrations
 # ------------------------------------------------------------------------------
 
+# Show fastfetch when terminal launched
+f [ -f /usr/bin/fastfetch ]; then
+        fastfetch
+fi
+
 # Command-not-found integration (if installed)
 if [ -f /etc/zsh_command_not_found ]; then
     source /etc/zsh_command_not_found

@@ -106,7 +106,7 @@ if [ ! -f /etc/apt/sources.list.d/syncthing.list ]; then
     printf "${BOLD}${CYAN}    Adding Syncthing APT repository...${RESET}\n\n"
     # Determine the distribution codename (e.g., 'jammy', 'noble')
     DISTRO_CODENAME=$(lsb_release -cs)
-    echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | \
+    echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable-v2" | \
         sudo tee /etc/apt/sources.list.d/syncthing.list > /dev/null || \
         printf "${BOLD}${RED}    Warning: Failed to add Syncthing repository.${RESET}\n\n"
     # Syncthing recommends adding the stable repo, not specific to codename for simplicity,

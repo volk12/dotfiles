@@ -192,7 +192,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # My custom aliases
-alias mdupdate='sh /home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
+alias mdupdate='/home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
 #alias sysup='sudo apt update && sudo apt upgrade && flatpak update && chezmoi upgrade' -NOTE- Replaced with sysup script
 alias c='clear'
 alias now='date +%T'

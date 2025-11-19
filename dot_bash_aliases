@@ -1,4 +1,4 @@
-alias mdupdate='sh /home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
+alias mdupdate='/home/justin/VSCodeRepos/mdoughtyDL/mdupdate.sh'
 alias update='sudo apt update && sudo apt upgrade && flatpak update && chezmoi upgrade'
 alias c='clear'
 alias now='date +%T'

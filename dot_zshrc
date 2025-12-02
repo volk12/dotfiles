@@ -34,6 +34,9 @@ WORDCHARS=${WORDCHARS//\/}
 # Hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
+# Require virtualenv for Python projects
+export PIP_REQUIRE_VIRTUALENV=true
+
 # ------------------------------------------------------------------------------
 # 2. PATH Management
 # ------------------------------------------------------------------------------
